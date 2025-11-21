@@ -1,0 +1,29 @@
+{
+  "name": "RAG API Dev Env",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": { 
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.testing.pytestArgs": ["tests"],
+        "python.testing.unittestEnabled": false,
+        "python.testing.pytestEnabled": true
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "njpwerner.autodocstring",
+        "charliermarsh.ruff"
+      ]
+    }
+  },
+  "forwardPorts": [8000],
+  
+  "postCreateCommand": "pip install --upgrade pip && pip install -r requirements.txt",
+
+  "runArgs": ["--env-file", ".env"],
+
+  "remoteUser": "vscode"
+}

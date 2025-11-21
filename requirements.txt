@@ -1,0 +1,24 @@
+#API Server & Web
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart       
+
+#Configuração e Ambiente
+pydantic-settings>=2.1.0
+python-dotenv>=1.0.0
+
+#LangChain Core e Orquestração
+langchain>=0.1.0       
+langchain-community   
+langchain-core          
+
+#Modelos de LLM e Embeddings
+langchain-openai        
+tiktoken               
+
+#Banco Vetorial (Vector Store)
+langchain-chroma       
+chromadb               
+
+#Processamento de Arquivos
+pypdf                  
