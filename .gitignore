@@ -2,3 +2,6 @@
 .dmypy.json
 dmypy.json
 .env
+__pycache__/
+*.py[cod]
+*$py.class
