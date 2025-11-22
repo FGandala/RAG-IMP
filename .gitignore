@@ -5,3 +5,4 @@ dmypy.json
 __pycache__/
 *.py[cod]
 *$py.class
+faiss_index_store
