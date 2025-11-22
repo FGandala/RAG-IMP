@@ -13,12 +13,11 @@ langchain-community
 langchain-core          
 
 #Modelos de LLM e Embeddings
-langchain-openai        
-tiktoken               
+langchain-huggingface
+sentence-transformers
 
 #Banco Vetorial (Vector Store)
-langchain-chroma       
-chromadb               
+faiss-cpu      
 
 #Processamento de Arquivos
 pypdf                  
