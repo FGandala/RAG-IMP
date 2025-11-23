@@ -1,7 +1,10 @@
+import os
+import shutil
 from fastapi import APIRouter, UploadFile, File, HTTPException, status
 from langchain_huggingface import HuggingFaceEmbeddings
-from app.schemas.document import RetrievalRequest, RetrievalResponse, IngestionResponse, DocumentResponse
+from app.schemas.document import RetrievalRequest, RetrievalResponse, IngestionResponse
 from app.services.ingestion import IngestionService
+from app.services.retrieval import RetrievalService
 from app.core.config import settings
 
 
@@ -17,6 +20,7 @@ try:
     )
 
     ingestion_service = IngestionService(embeddings=global_embeddings)
+    retrieval_service = RetrievalService(embeddings=global_embeddings)
     
     print("Modelo carregado e serviços prontos!")
 
@@ -56,18 +60,45 @@ async def ingest_document(file: UploadFile = File(...)):
         )
 
     
-
 @router.post("/retrieve", response_model=RetrievalResponse)
 async def retrieve_document(request: RetrievalRequest):
     """
     Realiza a busca vetorial baseada na pergunta do usuário.
     """
-    mock_docs = [
-        DocumentResponse(content="O FAISS é uma biblioteca...", source="manual.pdf", page=1, score=0.95),
-        DocumentResponse(content="LangChain facilita a integração...", source="docs.txt", page=None, score=0.88)
-    ]
+    query = request.query
+    k = request.k
+    results = await retrieval_service.search(query, k)
+
     
-    return RetrievalResponse(results=mock_docs)
+    return RetrievalResponse(results=results)
+
+
+@router.delete("/reset", status_code=status.HTTP_200_OK)
+async def reset_knowledge_base():
+    """
+    Limpa todos os documentos ingeridos
+    """
+
+    folder_path = settings.FAISS_INDEX_PATH
+
+    try:
+        if(os.path.exists(folder_path)):
+
+            shutil.rmtree(folder_path)
+            return {"status": "success", "message": "Banco vetorial resetado com sucesso."}
+        
+        else:
+            return {"status": "warning", "message": "O banco já estava vazio."}
+    
+    except Exception as e:
+        print("Erro {e} ao tentar deletar o banco vetorial")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Erro {e} ao tentar deletar o banco vetorial"
+        )
+
+
+
 
 
 
