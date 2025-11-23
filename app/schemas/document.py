@@ -6,7 +6,7 @@ class RetrievalRequest(BaseModel):
     """
     Esquema que representa uma query do usuário
     """
-    query: str = Field(..., min_lenght=3, description="A query do usuário para a busca vetorial")
+    query: str = Field(..., min_lenght=3, max_length=1000, description="A query do usuário para a busca vetorial")
     k: int = Field(default=4, ge=1, le=20, description = "Número de documentos a serem retornados")
 
 
