@@ -15,6 +15,7 @@ langchain-core
 #Modelos de LLM e Embeddings
 langchain-huggingface
 sentence-transformers
+langchain-groq
 
 #Banco Vetorial (Vector Store)
 faiss-cpu      
