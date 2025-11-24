@@ -6,9 +6,11 @@ from app.schemas.document import RetrievalRequest, RetrievalResponse, IngestionR
 from app.services.ingestion import IngestionService
 from app.services.retrieval import RetrievalService
 from app.core.config import settings
+from huggingface_hub import login
 
 
 try:
+    login(token=settings.HF_TOKEN)
     global_embeddings = HuggingFaceEmbeddings(
         model_name=settings.EMBEDDING_MODEL_NAME,
         model_kwargs={

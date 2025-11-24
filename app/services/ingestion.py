@@ -1,6 +1,7 @@
 import os
 import shutil
 import tempfile
+from pathlib import Path
 from fastapi import UploadFile
 from fastapi.concurrency import run_in_threadpool 
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
@@ -22,7 +23,10 @@ class IngestionService:
         Processa o arquivo, criar as chunks salva no banco vetorial 
         """
     
-        suffix = ".pdf" if file.filename.endswith(".pdf") else ".txt"
+        suffix = Path(file.filename).suffix.lower()
+
+        if suffix not in [".pdf", ".txt"]:
+            raise ValueError(f"O formato {suffix} não é suportado pelo sistema.")
 
         with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp_file:
             shutil.copyfileobj(file.file, tmp_file)

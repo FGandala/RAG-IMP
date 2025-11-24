@@ -1,0 +1,16 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.env
+.env.example
+.git/
+.gitignore
+faiss_index_store/
+faiss_store_*/
+.devcontainer/
+deploy.ps1
