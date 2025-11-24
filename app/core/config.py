@@ -8,6 +8,8 @@ class Settings(BaseSettings):
 
     HF_TOKEN: str
 
+    GROQ_API_KEY: str
+
     FAISS_INDEX_PATH: str = "faiss_index_store"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
